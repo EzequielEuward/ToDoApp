@@ -1,33 +1,27 @@
 // import { useTodos } from '../hooks';
+import { init } from 'create-react-app/createReactApp';
 import { TodoAdd } from './TodoAdd';
 import { TodoList } from './TodoList';
 import { todoReducer } from "./todoReducer";
-import { useReducer } from "react"
+import { useEffect, useReducer } from "react"
 
-
+const initialState = [];
 export const TodoApp = () => {
 
-    const initialState = [
-        {
-            id: new Date().getTime(),
-            description: 'Recolectar la piedra del alma',
-            done: false,
-        },
-        {
-            id: new Date().getTime() * 3,
-            description: 'Recolectar la piedra del poder',
-            done: false,
-        }
+    const [todos, dispatch] = useReducer(todoReducer, initialState, init);
 
-
-    ];
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }, [todos])
 
     const handleNewTodo = (todo) => {
-        console.log({ todo });
+        const action = {
+            type: '[TODO] Add Todo',
+            payload: todo
+        }
+        dispatch(action);
     }
 
-    //  const { todos, todosCount, pendingTodosCount, handleDeleteTodo, handleToggleTodo, handleNewTodo } = useTodos();
-    const [todos, dispatch] = useReducer(todoReducer, initialState);
     return (
         <>
             <h1>TodoApp: , <small>pendientes: </small> </h1>

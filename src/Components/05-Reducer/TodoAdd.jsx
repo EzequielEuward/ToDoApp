@@ -3,7 +3,7 @@ import { useForm } from "../Hooks/useForm"
 
 export const TodoAdd = ({ onNewTodo }) => {
 
-    const { description, onInputChange } = useForm({
+    const { description, onInputChange, onResetForm } = useForm({
         description: ''
     });
 
@@ -17,6 +17,7 @@ export const TodoAdd = ({ onNewTodo }) => {
             description:description,
         }   
         onNewTodo(newTodo);
+        onResetForm();
     }
 
 
